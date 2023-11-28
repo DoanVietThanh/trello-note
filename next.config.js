@@ -7,6 +7,10 @@ const nextConfig = {
         hostname: 'img.clerk.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
     ],
   },
 };
