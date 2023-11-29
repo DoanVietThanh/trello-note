@@ -30,14 +30,6 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
   }
 
-  console.log({
-    imageId,
-    imageThumbUrl,
-    imageFullUrl,
-    imageUserName,
-    imageLinkHTML,
-  });
-
   let board;
   try {
     board = await prisma.board.create({

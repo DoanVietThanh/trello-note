@@ -34,13 +34,11 @@ const FormPopover = ({
 
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
-      console.log({ data });
       toast.success('Board created !');
       closeRef.current?.click();
       router.push(`/board/${data.id}`);
     },
     onError: (error) => {
-      console.log({ error });
       toast.error('Board created fail !');
     },
   });
@@ -48,7 +46,6 @@ const FormPopover = ({
   const onSubmit = (formData: FormData) => {
     const title = formData.get('title') as string;
     const image = formData.get('image') as string;
-    console.log({ title, image });
     execute({ title, image });
   };
 

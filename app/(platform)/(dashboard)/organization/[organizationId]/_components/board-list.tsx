@@ -3,7 +3,7 @@ import { Hint } from '@/components/hint';
 import { Skeleton } from '@/components/ui/skeleton';
 import prisma from '@/lib/db';
 import { auth } from '@clerk/nextjs';
-import { HelpCircle, User2 } from 'lucide-react';
+import { Github, HelpCircle, User2 } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import React from 'react';
