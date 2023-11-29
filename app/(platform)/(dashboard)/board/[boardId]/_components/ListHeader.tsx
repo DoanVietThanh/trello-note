@@ -11,9 +11,10 @@ import ListOptions from './ListOptions';
 
 interface iListHeader {
   data: List;
+  onAddCard: () => void;
 }
 
-const ListHeader = ({ data }: iListHeader) => {
+const ListHeader = ({ data, onAddCard }: iListHeader) => {
   const [title, setTitle] = useState(data.title);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -88,7 +89,7 @@ const ListHeader = ({ data }: iListHeader) => {
           {title}
         </div>
       )}{' '}
-      <ListOptions onAddCard={() => {}} data={data} />
+      <ListOptions onAddCard={onAddCard} data={data} />
     </div>
   );
 };
