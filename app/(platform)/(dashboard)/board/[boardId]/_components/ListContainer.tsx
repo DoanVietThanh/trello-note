@@ -1,8 +1,9 @@
 'use client';
 import { ListWithCards } from '@/types';
 import { List } from '@prisma/client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ListForm from './ListForm';
+import ListItem from './ListItem';
 
 interface iListContainer {
   boardId: string;
@@ -10,11 +11,17 @@ interface iListContainer {
 }
 
 const ListContainer = ({ boardId, data }: iListContainer) => {
+  const [orderedData, setOrderedData] = useState(data);
+  useEffect(() => {
+    setOrderedData(data);
+  }, [data]);
+
   return (
-    <ol>
-      <div>
-        <ListForm />
-      </div>
+    <ol className='flex gap-x-3 h-full'>
+      {orderedData.map((list, index) => (
+        <ListItem key={list.id} index={index} data={list} />
+      ))}
+      <ListForm />
     </ol>
   );
 };
