@@ -24,8 +24,15 @@ export const Header = ({ data }: iHeader) => {
 
   const { execute: executeUpdateCard } = useAction(updateCard, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['card', data.id] });
-      toast.success('Rename title successfully');
+      queryClient.invalidateQueries({
+        queryKey: ['card', data.id],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ['card-logs', data.id],
+      });
+
+      toast.success(`Renamed to "${data.title}"`);
       setTitle(data.title);
     },
     onError: (error) => toast.error(error),

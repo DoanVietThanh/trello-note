@@ -10,11 +10,11 @@ import { List } from '@prisma/client';
 import { Button } from '@/components/ui/button';
 import { MoreHorizontal, X } from 'lucide-react';
 import { FormSubmit } from '@/components/form/form-submit';
-import { Separator } from '@radix-ui/react-separator';
 import { useAction } from '@/hooks/useAction';
 import { deleteList } from '@/actions/delete-list';
 import { toast } from 'sonner';
 import { copyList } from '@/actions/copy-list';
+import { Separator } from '@/components/ui/separator';
 
 interface iListOption {
   data: List;
@@ -92,7 +92,8 @@ const ListOptions = ({ data, onAddCard }: iListOption) => {
             Copy list...
           </FormSubmit>
         </form>
-        <form action={onDelete} className='border-t-2'>
+        <Separator className='my-2' />
+        <form action={onDelete}>
           <input hidden name='id' id='id' value={data.id} />
           <input hidden name='boardId' id='boardId' value={data.boardId} />
           <FormSubmit

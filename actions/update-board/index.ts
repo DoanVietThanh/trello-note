@@ -5,38 +5,47 @@ import { InputType, ReturnType } from './types';
 import prisma from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import { createSafeAction } from '@/lib/create-safe-action';
-import { UpdateList } from './scheme';
+import { createAuditLog } from '@/lib/create-audit-log';
+import { ACTION, ENTITY_TYPE } from '@prisma/client';
+import { UpdateBoard } from './scheme';
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
+
   if (!userId || !orgId) {
     return {
       error: 'Unauthorized',
     };
   }
-  const { title, id, boardId } = data;
-  let list;
+
+  const { title, id } = data;
+  let board;
+
   try {
-    list = await prisma.list.update({
+    board = await prisma.board.update({
       where: {
         id,
-        boardId,
-        board: {
-          orgId,
-        },
+        orgId,
       },
       data: {
         title,
       },
     });
+
+    await createAuditLog({
+      entityTitle: board.title,
+      entityId: board.id,
+      entityType: ENTITY_TYPE.BOARD,
+      action: ACTION.UPDATE,
+    });
   } catch (error) {
     return {
-      error: 'Failed to update',
+      error: 'Failed to update.',
     };
   }
 
-  revalidatePath(`/board/${boardId}`);
-  return { data: list };
+  revalidatePath(`/board/${id}`);
+  return { data: board };
 };
 
-export const updateList = createSafeAction(UpdateList, handler);
+export const updateBoard = createSafeAction(UpdateBoard, handler);

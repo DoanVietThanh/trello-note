@@ -1,8 +1,6 @@
 import { z } from 'zod';
 
-export const UpdateList = z.object({
-  id: z.string(),
-  boardId: z.string(),
+export const UpdateBoard = z.object({
   title: z
     .string({
       required_error: 'Title is required',
@@ -11,4 +9,5 @@ export const UpdateList = z.object({
     .min(3, {
       message: 'Title is too short',
     }),
+  id: z.string(),
 });

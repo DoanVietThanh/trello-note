@@ -5,9 +5,9 @@ import { useEventListener } from 'usehooks-ts';
 import React, { ElementRef, useRef, useState } from 'react';
 import { FormInput } from '@/components/form/form-input';
 import { useAction } from '@/hooks/useAction';
-import { updateList } from '@/actions/update-board';
 import { toast } from 'sonner';
 import ListOptions from './ListOptions';
+import { updateList } from '@/actions/update-list';
 
 interface iListHeader {
   data: List;
