@@ -15,6 +15,7 @@ import { createBoard } from '@/actions/create-board';
 import { toast } from 'sonner';
 import FormPicker from './form-picker';
 import { useRouter } from 'next/navigation';
+import { useProModal } from '@/hooks/useProModal';
 
 interface iFormPopover {
   children: React.ReactNode;
@@ -29,6 +30,8 @@ const FormPopover = ({
   align,
   sideOffset = 0,
 }: iFormPopover) => {
+  const proModal = useProModal(); // Check limit free boards
+
   const router = useRouter();
   const closeRef = useRef<ElementRef<'button'>>(null); // Close FormPopover when create successfully
 
@@ -41,6 +44,7 @@ const FormPopover = ({
     onError: (error) => {
       // toast.error('Board created fail !');
       toast.error(error);
+      proModal.onOpen();
     },
   });
 

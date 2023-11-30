@@ -13,7 +13,7 @@ export async function generateMetadata() {
 
 const OrganizationIdLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
+    <div className='w-full'>
       <OrgControl />
       {children}
     </div>

@@ -9,6 +9,7 @@ import { ACTION, ENTITY_TYPE } from '@prisma/client';
 import { createAuditLog } from '@/lib/create-audit-log';
 import { createSafeAction } from '@/lib/create-safe-action';
 import { hasAvailableCount, increamentAvailableCount } from '@/lib/org-limit';
+import { checkSubscription } from '@/lib/subscription';
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -17,11 +18,11 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       error: 'Unauthorized',
     };
   }
-
+  const isPro = await checkSubscription();
   const isExistLimit = await hasAvailableCount();
-  if (!isExistLimit) {
+  if (!isExistLimit && !isPro) {
     return {
-      error: 'Out limitation of Free Boards. Please upgrade to create more',
+      error: 'Out limitation of Free Boards. Please upgrade to create more.',
     };
   }
 
@@ -55,7 +56,9 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       },
     });
 
-    await increamentAvailableCount();
+    if (!isPro) {
+      await increamentAvailableCount();
+    }
 
     await createAuditLog({
       entityTitle: board.title,
