@@ -39,7 +39,8 @@ const FormPopover = ({
       router.push(`/board/${data.id}`);
     },
     onError: (error) => {
-      toast.error('Board created fail !');
+      // toast.error('Board created fail !');
+      toast.error(error);
     },
   });
 

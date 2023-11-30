@@ -1,7 +1,9 @@
 import FormPopover from '@/components/form/form-popover';
 import { Hint } from '@/components/hint';
 import { Skeleton } from '@/components/ui/skeleton';
+import { MAX_PREE_BOARDS } from '@/constants/boards';
 import prisma from '@/lib/db';
+import { getAvailableCount } from '@/lib/org-limit';
 import { auth } from '@clerk/nextjs';
 import { Github, HelpCircle, User2 } from 'lucide-react';
 import Link from 'next/link';
@@ -23,7 +25,7 @@ const BoardList = async () => {
     },
   });
 
-  console.log(boards);
+  const availableCount = await getAvailableCount();
 
   return (
     <div className='space-y-4'>
@@ -50,7 +52,9 @@ const BoardList = async () => {
             className='px-2 aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition'
           >
             <p className='text-sm'>Create new board</p>
-            <span className='text-xs'>5 remaining</span>
+            <span className='text-xs'>
+              {MAX_PREE_BOARDS - availableCount} remaining
+            </span>
             <Hint
               sideOffset={40}
               description={`
